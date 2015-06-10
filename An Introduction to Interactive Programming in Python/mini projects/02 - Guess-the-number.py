@@ -12,13 +12,14 @@ remaining_guesses = 7
 def new_game():
     # initialize global variables used in your code here
     global secret_number, remaining_guesses
-    secret_number = random.randrange(0, limit)
+    secret_number = 22#random.randrange(0, limit)
     if limit == 100:
         remaining_guesses = 7
     elif limit == 1000:
         remaining_guesses = 10
-    print "Guess the number in the range 0 - " + str(limit)
-    print "Remaining guesses : " + str(remaining_guesses)
+    print ""
+    print "New game. Range is from 0 to " + str(limit)
+    print "Number of remaining guesses is " + str(remaining_guesses)
 
 
 # define event handlers for control panel
@@ -26,35 +27,41 @@ def range100():
     # button that changes the range to [0,100) and starts a new game 
     global limit
     limit = 100
-    print "Setting the guess range between 0 and 100"
     new_game()
 
 def range1000():
     # button that changes the range to [0,1000) and starts a new game     
     global limit
     limit = 1000
-    print "Setting the guess range between 0 and 100"
     new_game()
     
 def input_guess(guess):
     # main game logic goes here	
+    print ""
+    print "Guess was " + guess
     guess = int(guess)
-    
-    if guess > secret_number:
-        print "Higher"
-        is_game_over()
-    elif guess < secret_number:
-        print "Lower"
-        is_game_over()
-    elif guess == secret_number:
-        print "Correct"
-        new_game()
-
-def is_game_over():
+        
     global remaining_guesses
     remaining_guesses -= 1
-    print "Remaining guesses : " + str(remaining_guesses)
-    if (remaining_guesses == 0):
+    print "Number of remaining guesses is " + str(remaining_guesses)
+    
+    
+    if guess > secret_number:
+        result = "Higher!"
+    elif guess < secret_number:
+        result = "Lower!"
+    elif guess == secret_number:
+        result = "Correct!"
+            
+    if remaining_guesses > 0:
+        print result
+        if result == "Correct!":
+            new_game()
+    else:
+        if result == "Correct!":
+            print result
+        else:
+            print "You ran out of guesses.  The number was " + str(secret_number)
         new_game()
     
 # create frame

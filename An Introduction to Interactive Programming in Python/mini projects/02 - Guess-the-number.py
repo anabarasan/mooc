@@ -17,9 +17,9 @@ def new_game():
         remaining_guesses = 7
     elif limit == 1000:
         remaining_guesses = 10
-    print ""
     print "New game. Range is from 0 to " + str(limit)
     print "Number of remaining guesses is " + str(remaining_guesses)
+    print ""
 
 
 # define event handlers for control panel
@@ -37,14 +37,12 @@ def range1000():
     
 def input_guess(guess):
     # main game logic goes here	
-    print ""
     print "Guess was " + guess
     guess = int(guess)
         
     global remaining_guesses
     remaining_guesses -= 1
     print "Number of remaining guesses is " + str(remaining_guesses)
-    
     
     if guess > secret_number:
         result = "Higher!"
@@ -55,13 +53,16 @@ def input_guess(guess):
             
     if remaining_guesses > 0:
         print result
+        print ""
         if result == "Correct!":
             new_game()
     else:
         if result == "Correct!":
             print result
+            print ""
         else:
             print "You ran out of guesses.  The number was " + str(secret_number)
+            print ""
         new_game()
     
 # create frame

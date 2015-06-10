@@ -12,7 +12,7 @@ remaining_guesses = 7
 def new_game():
     # initialize global variables used in your code here
     global secret_number, remaining_guesses
-    secret_number = 22#random.randrange(0, limit)
+    secret_number = random.randrange(0, limit)
     if limit == 100:
         remaining_guesses = 7
     elif limit == 1000:

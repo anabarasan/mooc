@@ -3,6 +3,8 @@ import simplegui
 
 # define global variables
 time = 0
+attempts = 0
+success  = 0
 run = False
 
 # define helper function format that converts time
@@ -20,30 +22,40 @@ def format(t):
     
 # define event handlers for buttons; "Start", "Stop", "Reset"
 def start_handler():
-    global time, run
+    global run, time
     run = True
     stopwatch.start()
 
 def stop_handler():
-    global run
+    global attempts, run, success
+    if (run == True):
+        attempts += 1
+        if (time % 10 == 0):
+            success += 1
+            
     run = False
     stopwatch.stop()
     
 def reset_handler():
-    global time, run
+    global attempts, run, success, time
     run = False
     stopwatch.stop()
+    attempts = 0
+    success = 0
     time = 0
     
 # define event handler for timer with 0.1 sec interval
 def timer_handler():
-    global time, run
+    global run, time
     if (run == True):
         time += 1
 
 # define draw handler
 def draw_handler(canvas):
-    canvas.draw_text(format(time), [100,100], 24, 'White')
+    display_time = format(time)
+    reflex_result = str(success) + '/' + str(attempts)
+    canvas.draw_text(display_time, [100,100], 24, 'White')
+    canvas.draw_text(reflex_result, [280,16], 16, 'White')
     
 # create frame
 frame = simplegui.create_frame('Stop Watch', 300, 300)

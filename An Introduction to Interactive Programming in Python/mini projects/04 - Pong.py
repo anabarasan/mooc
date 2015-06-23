@@ -66,10 +66,25 @@ def draw(canvas):
     
     # update paddle's vertical position, keep paddle on the screen
     for pos in paddle1_pos:
-        pos[1] += paddle1_vel
+        if ((paddle1_pos[0][1] > 0) and (paddle1_vel < 0)) or (paddle1_pos[-1][1] < HEIGHT and paddle1_vel > 0):
+            pos[1] += paddle1_vel
+        else:
+            if paddle1_vel < 0:
+                paddle1_pos[1][1] = 0
+            elif paddle1_vel > 0:
+                paddle1_pos[0][1] = HEIGHT - PAD_HEIGHT
+                paddle1_pos[1][1] = HEIGHT - PAD_HEIGHT
+                
     for pos in paddle2_pos:
-        pos[1] += paddle2_vel
-        
+        if ((paddle2_pos[0][1] > 0) and (paddle2_vel < 0)) or (paddle2_pos[-1][1] < HEIGHT and paddle2_vel > 0):
+            pos[1] += paddle2_vel
+        else:
+            if paddle2_vel < 0:
+                paddle2_pos[1][1] = 0
+            elif paddle2_vel > 0:
+                paddle2_pos[0][1] = HEIGHT - PAD_HEIGHT
+                paddle2_pos[1][1] = HEIGHT - PAD_HEIGHT
+    
     # draw paddles
     canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
     canvas.draw_polygon(paddle2_pos, 2, 'White', 'White')

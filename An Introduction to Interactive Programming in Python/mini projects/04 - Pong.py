@@ -25,6 +25,24 @@ paddle2_vel = 0
 score1 = 0
 score2 = 0
 
+#helper function
+def reflect_and_increase_speed():
+    global ball_vel
+    ball_vel[0] = -ball_vel[0]
+    ball_vel[0] += ball_vel[0] * 0.1
+    ball_vel[1] += ball_vel[1] * 0.1
+    
+def update_paddle_pos(position, velocity):
+    for pos in position:
+        if ((position[0][1] > 0) and (velocity < 0)) or (position[-1][1] < HEIGHT and velocity > 0):
+            pos[1] += velocity
+        else:
+            if velocity < 0:
+                position[1][1] = 0
+            elif velocity > 0:
+                position[0][1] = HEIGHT - PAD_HEIGHT
+                position[1][1] = HEIGHT - PAD_HEIGHT
+                
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
 def spawn_ball(direction = 'RIGHT'):
@@ -64,25 +82,8 @@ def draw(canvas):
     canvas.draw_circle(ball_pos, BALL_RADIUS, 2, 'White', 'White')
     
     # update paddle's vertical position, keep paddle on the screen
-    for pos in paddle1_pos:
-        if ((paddle1_pos[0][1] > 0) and (paddle1_vel < 0)) or (paddle1_pos[-1][1] < HEIGHT and paddle1_vel > 0):
-            pos[1] += paddle1_vel
-        else:
-            if paddle1_vel < 0:
-                paddle1_pos[1][1] = 0
-            elif paddle1_vel > 0:
-                paddle1_pos[0][1] = HEIGHT - PAD_HEIGHT
-                paddle1_pos[1][1] = HEIGHT - PAD_HEIGHT
-                
-    for pos in paddle2_pos:
-        if ((paddle2_pos[0][1] > 0) and (paddle2_vel < 0)) or (paddle2_pos[-1][1] < HEIGHT and paddle2_vel > 0):
-            pos[1] += paddle2_vel
-        else:
-            if paddle2_vel < 0:
-                paddle2_pos[1][1] = 0
-            elif paddle2_vel > 0:
-                paddle2_pos[0][1] = HEIGHT - PAD_HEIGHT
-                paddle2_pos[1][1] = HEIGHT - PAD_HEIGHT
+    update_paddle_pos(paddle1_pos, paddle1_vel)
+    update_paddle_pos(paddle2_pos, paddle2_vel)
     
     # draw paddles
     canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
@@ -91,17 +92,13 @@ def draw(canvas):
     # determine whether paddle and ball collide    
     if ((ball_pos[0] - BALL_RADIUS) <= PAD_WIDTH):
         if (paddle1_pos[0][1] < ball_pos[1] < paddle1_pos[-1][1]):
-            ball_vel[0] = -ball_vel[0]
-            ball_vel[0] += ball_vel[0] * 0.1
-            ball_vel[1] += ball_vel[1] * 0.1
+            reflect_and_increase_speed()
         else:
             score2 += 1
             spawn_ball('RIGHT')
     elif ((ball_pos[0] + BALL_RADIUS) >= WIDTH - PAD_WIDTH):
         if (paddle2_pos[0][1] < ball_pos[1] < paddle2_pos[-1][1]):
-            ball_vel[0] = -ball_vel[0]
-            ball_vel[0] += ball_vel[0] * 0.1
-            ball_vel[1] += ball_vel[1] * 0.1
+            reflect_and_increase_speed()
         else:
             score1 += 1
             spawn_ball('LEFT')

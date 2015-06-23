@@ -53,11 +53,6 @@ def draw(canvas):
     if ((ball_pos[1] - BALL_RADIUS) <= 0) or ((ball_pos[1] + BALL_RADIUS) >= HEIGHT):
         ball_vel[1] = -ball_vel[1]
         
-    if ((ball_pos[0] - BALL_RADIUS) <= PAD_WIDTH):
-        spawn_ball('RIGHT')
-    elif ((ball_pos[0] + BALL_RADIUS) >= WIDTH - PAD_WIDTH):
-        spawn_ball('LEFT')
-        
     ball_pos[0] += ball_vel[0]
     ball_pos[1] += ball_vel[1]
     
@@ -89,7 +84,16 @@ def draw(canvas):
     canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
     canvas.draw_polygon(paddle2_pos, 2, 'White', 'White')
     # determine whether paddle and ball collide    
-    
+    if ((ball_pos[0] - BALL_RADIUS) <= PAD_WIDTH):
+        if (paddle1_pos[0][1] < ball_pos[1] < paddle1_pos[-1][1]):
+            ball_vel[0] = -ball_vel[0]
+        else:
+            spawn_ball('RIGHT')
+    elif ((ball_pos[0] + BALL_RADIUS) >= WIDTH - PAD_WIDTH):
+        if (paddle2_pos[0][1] < ball_pos[1] < paddle2_pos[-1][1]):
+            ball_vel[0] = -ball_vel[0]
+        else:
+            spawn_ball('LEFT')
     # draw scores
         
 def keydown(key):

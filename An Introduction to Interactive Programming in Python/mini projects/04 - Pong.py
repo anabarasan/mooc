@@ -40,7 +40,12 @@ def draw(canvas):
     canvas.draw_line([WIDTH - PAD_WIDTH, 0],[WIDTH - PAD_WIDTH, HEIGHT], 1, "White")
         
     # update ball
-            
+    if ((ball_pos[1] - BALL_RADIUS) <= 0) or ((ball_pos[1] + BALL_RADIUS) >= HEIGHT):
+        ball_vel[1] = -ball_vel[1]
+        
+    ball_pos[0] += ball_vel[0]
+    ball_pos[1] += ball_vel[1]
+    
     # draw ball
     canvas.draw_circle(ball_pos, BALL_RADIUS, 2, 'White', 'White')
     

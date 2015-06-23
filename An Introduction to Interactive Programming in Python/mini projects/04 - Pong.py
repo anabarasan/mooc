@@ -87,11 +87,15 @@ def draw(canvas):
     if ((ball_pos[0] - BALL_RADIUS) <= PAD_WIDTH):
         if (paddle1_pos[0][1] < ball_pos[1] < paddle1_pos[-1][1]):
             ball_vel[0] = -ball_vel[0]
+            ball_vel[0] += ball_vel[0] * 0.1
+            ball_vel[1] += ball_vel[1] * 0.1
         else:
             spawn_ball('RIGHT')
     elif ((ball_pos[0] + BALL_RADIUS) >= WIDTH - PAD_WIDTH):
         if (paddle2_pos[0][1] < ball_pos[1] < paddle2_pos[-1][1]):
             ball_vel[0] = -ball_vel[0]
+            ball_vel[0] += ball_vel[0] * 0.1
+            ball_vel[1] += ball_vel[1] * 0.1
         else:
             spawn_ball('LEFT')
     # draw scores

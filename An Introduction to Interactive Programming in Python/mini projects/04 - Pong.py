@@ -20,8 +20,8 @@ paddle1_pos = [[0, HEIGHT/2 - PAD_HEIGHT/2], [PAD_WIDTH, HEIGHT/2 - PAD_HEIGHT/2
               [PAD_WIDTH, HEIGHT/2 + PAD_HEIGHT/2], [0, HEIGHT/2 + PAD_HEIGHT/2]]
 paddle2_pos = [[WIDTH, HEIGHT/2 - PAD_HEIGHT/2], [WIDTH - PAD_WIDTH, HEIGHT/2 - PAD_HEIGHT/2],
               [WIDTH - PAD_WIDTH, HEIGHT/2 + PAD_HEIGHT/2], [WIDTH, HEIGHT/2 + PAD_HEIGHT/2]]
-paddle1_vel = [0,0]
-paddle2_vel = [0,0]
+paddle1_vel = 0
+paddle2_vel = 0
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
@@ -66,9 +66,9 @@ def draw(canvas):
     
     # update paddle's vertical position, keep paddle on the screen
     for pos in paddle1_pos:
-        pos[1] += paddle1_vel[1]
+        pos[1] += paddle1_vel
     for pos in paddle2_pos:
-        pos[1] += paddle2_vel[1]
+        pos[1] += paddle2_vel
         
     # draw paddles
     canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
@@ -79,10 +79,21 @@ def draw(canvas):
         
 def keydown(key):
     global paddle1_vel, paddle2_vel
+    if key == simplegui.KEY_MAP['w']:
+        paddle1_vel = -10
+    elif key == simplegui.KEY_MAP['s']:
+        paddle1_vel = 10
+    elif key == simplegui.KEY_MAP['up']:
+        paddle2_vel = -10
+    elif key == simplegui.KEY_MAP['down']:
+        paddle2_vel = 10
    
 def keyup(key):
     global paddle1_vel, paddle2_vel
-
+    if key == simplegui.KEY_MAP['w'] or key == simplegui.KEY_MAP['s']:
+        paddle1_vel = 0
+    elif key == simplegui.KEY_MAP['up'] or key == simplegui.KEY_MAP['down']:
+        paddle2_vel = 0
 
 # create frame
 frame = simplegui.create_frame("Pong", WIDTH, HEIGHT)

@@ -16,6 +16,10 @@ RIGHT = True
 
 ball_pos = [WIDTH / 2, HEIGHT / 2]
 ball_vel = [0, 0]
+paddle1_pos = [[0, HEIGHT/2 - PAD_HEIGHT/2], [PAD_WIDTH, HEIGHT/2 - PAD_HEIGHT/2],
+              [PAD_WIDTH, HEIGHT/2 + PAD_HEIGHT/2], [0, HEIGHT/2 + PAD_HEIGHT/2]]
+paddle2_pos = [[WIDTH, HEIGHT/2 - PAD_HEIGHT/2], [WIDTH - PAD_WIDTH, HEIGHT/2 - PAD_HEIGHT/2],
+              [WIDTH - PAD_WIDTH, HEIGHT/2 + PAD_HEIGHT/2], [WIDTH, HEIGHT/2 + PAD_HEIGHT/2]]
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
@@ -62,7 +66,8 @@ def draw(canvas):
     # update paddle's vertical position, keep paddle on the screen
     
     # draw paddles
-    
+    canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
+    canvas.draw_polygon(paddle2_pos, 2, 'White', 'White')
     # determine whether paddle and ball collide    
     
     # draw scores

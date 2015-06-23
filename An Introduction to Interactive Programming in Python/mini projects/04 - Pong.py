@@ -22,6 +22,8 @@ paddle2_pos = [[WIDTH, HEIGHT/2 - PAD_HEIGHT/2], [WIDTH - PAD_WIDTH, HEIGHT/2 - 
               [WIDTH - PAD_WIDTH, HEIGHT/2 + PAD_HEIGHT/2], [WIDTH, HEIGHT/2 + PAD_HEIGHT/2]]
 paddle1_vel = 0
 paddle2_vel = 0
+score1 = 0
+score2 = 0
 
 # initialize ball_pos and ball_vel for new bal in middle of table
 # if direction is RIGHT, the ball's velocity is upper right, else upper left
@@ -83,6 +85,7 @@ def draw(canvas):
     # draw paddles
     canvas.draw_polygon(paddle1_pos, 2, 'White', 'White')
     canvas.draw_polygon(paddle2_pos, 2, 'White', 'White')
+    
     # determine whether paddle and ball collide    
     if ((ball_pos[0] - BALL_RADIUS) <= PAD_WIDTH):
         if (paddle1_pos[0][1] < ball_pos[1] < paddle1_pos[-1][1]):
@@ -90,6 +93,7 @@ def draw(canvas):
             ball_vel[0] += ball_vel[0] * 0.1
             ball_vel[1] += ball_vel[1] * 0.1
         else:
+            score2 += 1
             spawn_ball('RIGHT')
     elif ((ball_pos[0] + BALL_RADIUS) >= WIDTH - PAD_WIDTH):
         if (paddle2_pos[0][1] < ball_pos[1] < paddle2_pos[-1][1]):
@@ -97,8 +101,12 @@ def draw(canvas):
             ball_vel[0] += ball_vel[0] * 0.1
             ball_vel[1] += ball_vel[1] * 0.1
         else:
+            score1 += 1
             spawn_ball('LEFT')
+            
     # draw scores
+    canvas.draw_text(str(score1), [WIDTH/4 - 2, 50], 48, 'Green')
+    canvas.draw_text(str(score2), [WIDTH - WIDTH/4 + 2, 50], 48, 'Green')
         
 def keydown(key):
     global paddle1_vel, paddle2_vel

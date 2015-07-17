@@ -9,9 +9,11 @@ state = 0
 current = 0
 previous = 0
 turns = 0
+image = simplegui.load_image('https://lh6.googleusercontent.com/pHmAXUvZz8UpwbtZ4qlhnwmlFfG-VysnW8yM0mq2br9d_Borq5Faca59Q3Kr0yjwmW9RhZtG=w1576-h679')
+useImage = False
 
 def new_game():
-    global current, exposed, num_list, previous, state
+    global current, exposed, num_list, previous, state, turns
     list1 = range(0,8)
     list2 = range(0,8)
     num_list = list1 + list2
@@ -22,6 +24,10 @@ def new_game():
     previous = None
     turns = 0
      
+def toggle_image():
+    global useImage
+    useImage = not useImage
+    
 # define event handlers
 def mouseclick(pos):
     global current, exposed, previous, state, turns
@@ -43,7 +49,7 @@ def mouseclick(pos):
     
     if not exposed[clicked]:
         exposed[clicked] = True
-    print state, current, previous
+#    print state, current, previous
     
 # cards are logically 50x100 pixels in size    
 def draw(canvas):
@@ -55,11 +61,18 @@ def draw(canvas):
     txt_y_pos = 60
     for idx, num in enumerate(num_list):
         if (exposed[idx]):
-            canvas.draw_polygon([(card_x, card_y), 
-                                 (card_x + width, card_y),
-                                 (card_x + width, card_y + height), 
-                                 (card_x, card_y + height)], 1, 'White')
-            canvas.draw_text(str(num), [txt_x_pos, txt_y_pos], 20, 'White')
+            if useImage:
+                img_center = ((num * 50) + 25, 50)
+                hw = (50, 100)
+                cvs_center = ((idx * 50) + 25, 50)
+#                print img_center, cvs_center
+                canvas.draw_image(image, img_center, hw, cvs_center, hw)
+            else:
+                canvas.draw_polygon([(card_x, card_y), 
+                                     (card_x + width, card_y),
+                                     (card_x + width, card_y + height), 
+                                     (card_x, card_y + height)], 1, 'White')
+                canvas.draw_text(str(num), [txt_x_pos, txt_y_pos], 20, 'White')
         else:
             canvas.draw_polygon([(card_x, card_y), 
                                  (card_x + width, card_y),
@@ -71,8 +84,9 @@ def draw(canvas):
 
 # create frame and add a button and labels
 frame = simplegui.create_frame("Memory", 800, 100)
-frame.add_button("Reset", new_game)
+frame.add_button("Reset", new_game, 200)
 label = frame.add_label("Turns = 0")
+frame.add_button("Toggle Image", toggle_image, 200)
 
 # register event handlers
 frame.set_mouseclick_handler(mouseclick)

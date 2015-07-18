@@ -9,7 +9,7 @@ state = 0
 current = 0
 previous = 0
 turns = 0
-image = simplegui.load_image('https://lh6.googleusercontent.com/pHmAXUvZz8UpwbtZ4qlhnwmlFfG-VysnW8yM0mq2br9d_Borq5Faca59Q3Kr0yjwmW9RhZtG=w1576-h679')
+image = simplegui.load_image('https://dl.dropboxusercontent.com/u/27602666/objects.png')
 useImage = False
 
 def new_game():

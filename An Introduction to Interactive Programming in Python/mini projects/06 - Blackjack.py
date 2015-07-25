@@ -1,4 +1,4 @@
-# Mini-project #6 - Blackjack http://www.codeskulptor.org/#user40_qg8WJqrNOJ_1.py
+# Mini-project #6 - Blackjack
 
 import simplegui
 import random
@@ -16,6 +16,9 @@ card_back = simplegui.load_image("http://storage.googleapis.com/codeskulptor-ass
 in_play = False
 outcome = ""
 score = 0
+deck = None
+player = None
+dealer = None
 
 # define globals for cards
 SUITS = ('C', 'S', 'H', 'D')
@@ -61,7 +64,7 @@ class Hand:
 
     def get_value(self):
         # count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust
-    	hand_value = 0
+        hand_value = 0
         ace = False
         for card in self.hand:
             rank = card.get_rank()
@@ -73,7 +76,9 @@ class Hand:
         return hand_value
    
     def draw(self, canvas, pos):
-        pass	# draw a hand on the canvas, use the draw method for cards
+        for card in self.hand:
+            card.draw(canvas, pos)
+            pos[0] += CARD_SIZE[0]
  
         
 # define deck class 
@@ -96,7 +101,7 @@ class Deck:
 
 #define event handlers for buttons
 def deal():
-    global outcome, in_play
+    global outcome, in_play, deck, player, dealer
 
     player = Hand()
     dealer = Hand()
@@ -113,6 +118,7 @@ def deal():
     print "Dealer" , dealer
     
     in_play = True
+    outcome = "Hit or Stand?"
 
 def hit():
     global outcome, in_play, score
@@ -124,9 +130,9 @@ def hit():
         if player.get_value() > 21:
             print "You have busted"
             in_play = False
+            outcome = "New Deal?"
    
         print "Player", player, "=>", player.get_value()
-   
     # if busted, assign a message to outcome, update in_play and score
        
 def stand():
@@ -143,17 +149,23 @@ def stand():
                 print "Dealer Wins"
             else:
                 print "You Win"
+        outcome = "New Deal?"
     else:
         print "You have busted"
+   
+    # if hand is in play, repeatedly hit dealer until his hand has value 17 or more
 
     # assign a message to outcome, update in_play and score
 
 # draw handler    
 def draw(canvas):
-    # test to make sure that card.draw works, replace with your code below
-    
-    card = Card("S", "A")
-    card.draw(canvas, [300, 300])
+    canvas.draw_text('Dealer', [50, 225], 36, 'Black', 'monospace')
+    dealer.draw(canvas, [50, 250])
+    if in_play:
+        canvas.draw_image(card_back, CARD_BACK_CENTER, CARD_BACK_SIZE, [CARD_BACK_CENTER[0] + 50, CARD_BACK_CENTER[1] + 250], CARD_BACK_SIZE)
+    canvas.draw_text('Player', [50, 425], 36, 'Black', 'monospace')
+    canvas.draw_text(outcome, [300, 425], 36, 'Hit or Stand?', 'monospace')
+    player.draw(canvas, [50, 450])
 
 
 # initialization frame

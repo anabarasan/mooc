@@ -1,4 +1,4 @@
-# Mini-project #6 - Blackjack
+# Mini-project #6 - Blackjack http://www.codeskulptor.org/#user40_qg8WJqrNOJ_1.py
 
 import simplegui
 import random
@@ -89,7 +89,19 @@ class Deck:
 def deal():
     global outcome, in_play
 
-    # your code goes here
+    player = Hand()
+    dealer = Hand()
+    
+    deck = Deck()
+    deck.shuffle()
+    
+    dealer.add_card(deck.deal_card())
+    player.add_card(deck.deal_card())
+    dealer.add_card(deck.deal_card())
+    player.add_card(deck.deal_card())
+    
+    print "Player" , player
+    print "Dealer" , dealer
     
     in_play = True
 

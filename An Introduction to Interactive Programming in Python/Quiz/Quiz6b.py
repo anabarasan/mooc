@@ -65,11 +65,6 @@ n = 1000
 numbers = range(2, n)
 results = []
 while len(numbers) > 0:
-    num_list = numbers[:]
-    divisor = numbers[0]
-    results.append(divisor)
-    for number in numbers:
-        if number % divisor == 0:
-            num_list.remove(number)
-    numbers = num_list[:]
+    results.append()
+    numbers = [n for n in numbers if n % numbers[0] != 0]
 print len(results)

@@ -34,10 +34,20 @@ class Card:
 
 #####################################################
 # Student should insert code for Deck class here
-        
+class Deck:
+    def __init__(self):
+        self.deck = [Card(suit, rank) for rank in RANKS for suit in SUITS]
 
+    def shuffle(self):
+        # shuffle the deck 
+        random.shuffle(self.deck)
+        return self.deck
 
+    def deal_card(self):
+        return self.deck.pop()
     
+    def __str__(self):
+        return "Deck contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.deck])
 ###################################################
 # Test code
 

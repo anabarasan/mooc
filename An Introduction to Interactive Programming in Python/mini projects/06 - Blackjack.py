@@ -70,17 +70,18 @@ class Hand:
 # define deck class 
 class Deck:
     def __init__(self):
-        pass	# create a Deck object
+        self.deck = [Card(suit, rank) for rank in RANKS for suit in SUITS]
 
     def shuffle(self):
         # shuffle the deck 
-        pass    # use random.shuffle()
+        random.shuffle(self.deck)
+        return self.deck
 
     def deal_card(self):
-        pass	# deal a card object from the deck
+        return self.deck.pop()
     
     def __str__(self):
-        pass	# return a string representing the deck
+        return "Deck contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.deck])
 
 
 

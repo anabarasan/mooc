@@ -115,9 +115,15 @@ def deal():
     in_play = True
 
 def hit():
-    pass	# replace with your code below
- 
-    # if the hand is in play, hit the player
+    global outcome, in_play, score
+
+    if player.get_value() <= 21:
+        player.add_card(deck.deal_card())
+        
+    if player.get_value() > 21:
+        print "You have busted"
+   
+    print player, "=>", player.get_value()
    
     # if busted, assign a message to outcome, update in_play and score
        

@@ -51,17 +51,17 @@ class Card:
 # define hand class
 class Hand:
     def __init__(self):
-        pass	# create Hand object
+        self.card_list = []
 
     def __str__(self):
-        pass	# return a string representation of a hand
+        return "Hand contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.card_list])
 
     def add_card(self, card):
-        pass	# add a card object to a hand
+        self.card_list.append(card)
 
     def get_value(self):
         # count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust
-        pass	# compute the value of the hand, see Blackjack video
+    	pass	# compute the value of the hand, see Blackjack video
    
     def draw(self, canvas, pos):
         pass	# draw a hand on the canvas, use the draw method for cards

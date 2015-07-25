@@ -51,13 +51,13 @@ class Card:
 # define hand class
 class Hand:
     def __init__(self):
-        self.card_list = []
+        self.hand = []
 
     def __str__(self):
-        return "Hand contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.card_list])
+        return "Hand contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.hand])
 
     def add_card(self, card):
-        self.card_list.append(card)
+        self.hand.append(card)
 
     def get_value(self):
         # count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust

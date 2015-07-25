@@ -34,10 +34,31 @@ class Card:
 
 #####################################################
 # Student should insert code for Hand class here
-        
+class Hand:
+    def __init__(self):
+        self.hand = []
 
+    def __str__(self):
+        return "Hand contains " + ' '.join([card.get_suit() + card.get_rank() for card in self.hand])
 
-    
+    def add_card(self, card):
+        self.hand.append(card)
+
+    def get_value(self):
+        # count aces as 1, if the hand has an ace, then add 10 to hand value if it doesn't bust
+        hand_value = 0
+        ace = False
+        for card in self.hand:
+            rank = card.get_rank()
+            hand_value += VALUES[rank]
+            if rank == 'A':
+                ace = True
+        if ace and hand_value + 10 <= 21:
+            hand_value += 10
+        return hand_value
+   
+    def draw(self, canvas, pos):
+        pass	# draw a hand on the canvas, use the draw method for cards   
 ###################################################
 # Test code
 

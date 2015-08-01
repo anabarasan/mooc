@@ -10,6 +10,16 @@ score = 0
 lives = 3
 time = 0
 
+# globals for keypress
+KEY_MAP = simplegui.KEY_MAP
+keys = {
+    KEY_MAP['up']   : False,
+    KEY_MAP['down'] : False,
+    KEY_MAP['left'] : False,
+    KEY_MAP['right']: False,
+    KEY_MAP['space']: False
+}
+
 class ImageInfo:
     def __init__(self, center, size, radius = 0, lifespan = None, animated = False):
         self.center = center
@@ -97,10 +107,14 @@ class Ship:
         self.radius = info.get_radius()
         
     def draw(self,canvas):
-        canvas.draw_circle(self.pos, self.radius, 1, "White", "White")
+        #canvas.draw_circle(self.pos, self.radius, 1, "White", "White")
+        canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
 
     def update(self):
-        pass
+        if keys[KEY_MAP['left']]:
+            self.angle -= 0.1
+        elif keys[KEY_MAP['right']]:
+            self.angle += 0.1
     
     
 # Sprite class
@@ -154,6 +168,12 @@ def draw(canvas):
 def rock_spawner():
     pass
     
+def keydown(key):
+    keys[key] = True
+
+def keyup(key):
+    keys[key] = False
+    
 # initialize frame
 frame = simplegui.create_frame("Asteroids", WIDTH, HEIGHT)
 
@@ -164,6 +184,8 @@ a_missile = Sprite([2 * WIDTH / 3, 2 * HEIGHT / 3], [-1,1], 0, 0, missile_image,
 
 # register handlers
 frame.set_draw_handler(draw)
+frame.set_keydown_handler(keydown)
+frame.set_keyup_handler(keyup)
 
 timer = simplegui.create_timer(1000.0, rock_spawner)
 

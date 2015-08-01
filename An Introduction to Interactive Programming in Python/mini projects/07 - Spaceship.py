@@ -64,7 +64,6 @@ splash_image = simplegui.load_image("http://commondatastorage.googleapis.com/cod
 
 # ship image
 ship_info = ImageInfo([45, 45], [90, 90], 35)
-thrust_info = ImageInfo([135, 45], [90, 90], 35)
 ship_image = simplegui.load_image("http://commondatastorage.googleapis.com/codeskulptor-assets/lathrop/double_ship.png")
 
 # missile image - shot1.png, shot2.png, shot3.png
@@ -109,7 +108,7 @@ class Ship:
     def draw(self,canvas):
         #canvas.draw_circle(self.pos, self.radius, 1, "White", "White")
         if self.thrust:
-            canvas.draw_image(self.image, thrust_info.get_center(), self.image_size, self.pos, self.image_size, self.angle)
+            canvas.draw_image(self.image, [self.image_center[0] + self.image_size[0], self.image_center[1]], self.image_size, self.pos, self.image_size, self.angle)
         else:
             canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
 
@@ -122,21 +121,28 @@ class Ship:
             self.angle += self.angle_vel
             
         self.thrust = keys[KEY_MAP['up']]
-            
-        #Movement
+        self.move()
+        
+    def move(self):
         #position update
         self.pos[0] += self.vel[0]
         self.pos[1] += self.vel[1]
+        
+        self.pos = [self.pos[0] % WIDTH, self.pos[1] % HEIGHT]
         #friction update
-        friction = 0.06
+        friction = 0.05
         self.vel[0] *= (1- friction)
         self.vel[1] *= (1- friction)
         if self.thrust:
+            ship_thrust_sound.set_volume(0.5)
+            ship_thrust_sound.play()
             #thrust update
             forward = angle_to_vector(self.angle)
             self.vel[0] += forward[0]
             self.vel[1] += forward[1]
-    
+        else:
+            ship_thrust_sound.pause()
+            
     
 # Sprite class
 class Sprite:

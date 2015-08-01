@@ -100,7 +100,7 @@ class Ship:
         self.vel = [vel[0],vel[1]]
         self.thrust = False
         self.angle = angle
-        self.angle_vel = 0
+        self.angle_vel = 0.1
         self.image = image
         self.image_center = info.get_center()
         self.image_size = info.get_size()
@@ -112,9 +112,9 @@ class Ship:
 
     def update(self):
         if keys[KEY_MAP['left']]:
-            self.angle -= 0.1
+            self.angle -= self.angle_vel
         elif keys[KEY_MAP['right']]:
-            self.angle += 0.1
+            self.angle += self.angle_vel
     
     
 # Sprite class

@@ -121,6 +121,7 @@ class Ship:
             self.angle += self.angle_vel
         if keys[KEY_MAP['space']]:
             self.shoot()
+            keys[KEY_MAP['space']] = False
         self.thrust = keys[KEY_MAP['up']]
         self.move()
         
@@ -146,11 +147,12 @@ class Ship:
             
     def shoot(self):
         global a_missile 
+        MISSILE_VELOCITY = 10
         missile_vector = angle_to_vector(self.angle)
         offset = [missile_vector[0] * self.radius, missile_vector[1] * self.radius]
         position = [self.pos[0] + offset[0], self.pos[1] + offset[1]]
-        print self.pos, offset, position, self.vel
-        a_missile = Sprite(position, self.vel, 0, 0, missile_image, missile_info, missile_sound)
+        velocity = [(missile_vector[0] * MISSILE_VELOCITY) + self.vel[0], (missile_vector[1] * MISSILE_VELOCITY) + self.vel[1]]
+        a_missile = Sprite(position, velocity, 0, 0, missile_image, missile_info, missile_sound)
     
 # Sprite class
 class Sprite:

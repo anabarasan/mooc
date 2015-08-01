@@ -146,7 +146,11 @@ class Ship:
             
     def shoot(self):
         global a_missile 
-        a_missile = Sprite(self.pos, self.vel, 0, 0, missile_image, missile_info, missile_sound)
+        missile_vector = angle_to_vector(self.angle)
+        offset = [missile_vector[0] * self.radius, missile_vector[1] * self.radius]
+        position = [self.pos[0] + offset[0], self.pos[1] + offset[1]]
+        print self.pos, offset, position, self.vel
+        a_missile = Sprite(position, self.vel, 0, 0, missile_image, missile_info, missile_sound)
     
 # Sprite class
 class Sprite:

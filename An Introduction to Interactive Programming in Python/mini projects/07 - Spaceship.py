@@ -111,10 +111,24 @@ class Ship:
         canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
 
     def update(self):
+        #Rotation
         if keys[KEY_MAP['left']]:
             self.angle -= self.angle_vel
-        elif keys[KEY_MAP['right']]:
+        if keys[KEY_MAP['right']]:
             self.angle += self.angle_vel
+        #Movement
+        #position update
+        self.pos[0] += self.vel[0]
+        self.pos[1] += self.vel[1]
+        #friction update
+        friction = 0.06
+        self.vel[0] *= (1- friction)
+        self.vel[1] *= (1- friction)
+        if keys[KEY_MAP['up']]:
+            #thrust update
+            forward = angle_to_vector(self.angle)
+            self.vel[0] += forward[0]
+            self.vel[1] += forward[1]
     
     
 # Sprite class

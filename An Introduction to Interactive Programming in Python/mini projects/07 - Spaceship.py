@@ -196,7 +196,7 @@ def draw(canvas):
     canvas.draw_image(debris_image, center, size, (wtime + WIDTH / 2, HEIGHT / 2), (WIDTH, HEIGHT))
     canvas.draw_text('Lives', [50, 25], 18, "White")
     canvas.draw_text(str(lives), [50, 50], 18, "White")
-    canvas.draw_text('Score', [540, 25], 18, "White")
+    canvas.draw_text('Score', [725, 25], 18, "White")
     
     # draw ship and sprites
     my_ship.draw(canvas)

@@ -119,7 +119,8 @@ class Ship:
         if keys[KEY_MAP['right']]:
             #Rotation clockwise
             self.angle += self.angle_vel
-            
+        if keys[KEY_MAP['space']]:
+            self.shoot()
         self.thrust = keys[KEY_MAP['up']]
         self.move()
         
@@ -143,6 +144,9 @@ class Ship:
         else:
             ship_thrust_sound.pause()
             
+    def shoot(self):
+        global a_missile 
+        a_missile = Sprite(self.pos, self.vel, 0, 0, missile_image, missile_info, missile_sound)
     
 # Sprite class
 class Sprite:

@@ -64,6 +64,7 @@ splash_image = simplegui.load_image("http://commondatastorage.googleapis.com/cod
 
 # ship image
 ship_info = ImageInfo([45, 45], [90, 90], 35)
+thrust_info = ImageInfo([135, 45], [90, 90], 35)
 ship_image = simplegui.load_image("http://commondatastorage.googleapis.com/codeskulptor-assets/lathrop/double_ship.png")
 
 # missile image - shot1.png, shot2.png, shot3.png
@@ -92,7 +93,6 @@ def angle_to_vector(ang):
 def dist(p,q):
     return math.sqrt((p[0] - q[0]) ** 2+(p[1] - q[1]) ** 2)
 
-
 # Ship class
 class Ship:
     def __init__(self, pos, vel, angle, image, info):
@@ -108,14 +108,21 @@ class Ship:
         
     def draw(self,canvas):
         #canvas.draw_circle(self.pos, self.radius, 1, "White", "White")
-        canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
+        if self.thrust:
+            canvas.draw_image(self.image, thrust_info.get_center(), self.image_size, self.pos, self.image_size, self.angle)
+        else:
+            canvas.draw_image(self.image, self.image_center, self.image_size, self.pos, self.image_size, self.angle)
 
     def update(self):
-        #Rotation
         if keys[KEY_MAP['left']]:
+            #Rotation anti-clockwise
             self.angle -= self.angle_vel
         if keys[KEY_MAP['right']]:
+            #Rotation clockwise
             self.angle += self.angle_vel
+            
+        self.thrust = keys[KEY_MAP['up']]
+            
         #Movement
         #position update
         self.pos[0] += self.vel[0]
@@ -124,7 +131,7 @@ class Ship:
         friction = 0.06
         self.vel[0] *= (1- friction)
         self.vel[1] *= (1- friction)
-        if keys[KEY_MAP['up']]:
+        if self.thrust:
             #thrust update
             forward = angle_to_vector(self.angle)
             self.vel[0] += forward[0]

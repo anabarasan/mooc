@@ -238,6 +238,7 @@ def draw(canvas):
     my_ship.update()
     #a_rock.update()
     a_missile.update()
+    process_sprite_group(rock_group, canvas)
 
     # draw splash screen if not started
     if not started:

@@ -231,12 +231,12 @@ def draw(canvas):
 
     # draw ship and sprites
     my_ship.draw(canvas)
-    a_rock.draw(canvas)
+    #a_rock.draw(canvas)
     a_missile.draw(canvas)
     
     # update ship and sprites
     my_ship.update()
-    a_rock.update()
+    #a_rock.update()
     a_missile.update()
 
     # draw splash screen if not started
@@ -255,6 +255,12 @@ def rock_spawner():
         a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
         rock_group.add(a_rock)
             
+def process_sprite_group(rockgroup, canvas):
+    for rock in rockgroup:
+        rock.draw(canvas)
+        rock.update()
+        
+    
 # initialize stuff
 frame = simplegui.create_frame("Asteroids", WIDTH, HEIGHT)
 

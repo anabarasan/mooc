@@ -294,7 +294,8 @@ def draw(canvas):
     
     if group_collide(rock_group, my_ship):
         lives -= 1
-        if lives == 0:
+        if lives <= 0:
+            lives = 0
             started = False
             
     # draw splash screen if not started

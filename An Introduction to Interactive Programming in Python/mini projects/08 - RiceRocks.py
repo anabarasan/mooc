@@ -198,6 +198,12 @@ class Sprite:
         # update position
         self.pos[0] = (self.pos[0] + self.vel[0]) % WIDTH
         self.pos[1] = (self.pos[1] + self.vel[1]) % HEIGHT
+        
+        #increment age
+        self.age += 1
+        if self.age >= self.lifespan:
+            return False
+        return True
 
     def get_position(self):
         return self.pos

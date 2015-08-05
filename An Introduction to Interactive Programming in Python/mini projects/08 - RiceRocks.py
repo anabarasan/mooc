@@ -261,7 +261,8 @@ def draw(canvas):
         score = 0
         soundtrack.rewind()
     
-    soundtrack.play()
+    if started:
+        soundtrack.play()
         
     # animiate background
     time += 1
@@ -311,8 +312,9 @@ def rock_spawner():
             rock_pos = [random.randrange(0, WIDTH), random.randrange(0, HEIGHT)]
             rock_vel = [random.random() * .6 - .3, random.random() * .6 - .3]
             rock_avel = random.random() * .2 - .1
-            a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
-            rock_group.add(a_rock)
+            if dist(my_ship.get_position(), rock_pos) > (my_ship.get_radius() + asteroid_info.get_radius() + 50):
+                a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
+                rock_group.add(a_rock)
     else:
         rock_group = set([])
         

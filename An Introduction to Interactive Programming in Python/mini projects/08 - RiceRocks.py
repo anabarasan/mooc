@@ -101,10 +101,12 @@ def group_collide(sprite_group, other_object):
     return False
 
 def group_group_collide(rocks, missiles):
+    collisions = 0
     for rock in set(rocks):
-        if group_collide(missiles, rock)
+        if group_collide(missiles, rock):
             rocks.remove(rock)
-            
+            collisions += 1
+    return collisions
 
 
 # Ship class
@@ -252,8 +254,15 @@ def click(pos):
         started = True
 
 def draw(canvas):
-    global time, started, lives
+    global time, started, lives, score
     
+    if started and lives == 0:
+        lives = 3
+        score = 0
+        soundtrack.rewind()
+    
+    soundtrack.play()
+        
     # animiate background
     time += 1
     wtime = (time / 4) % WIDTH
@@ -278,14 +287,18 @@ def draw(canvas):
     my_ship.update()
     #a_rock.update()
     #a_missile.update()
-    group_group_collide(rock_group, missile_group)
+    score += group_group_collide(rock_group, missile_group)
     process_sprite_group(rock_group, canvas)
     process_sprite_group(missile_group, canvas)
     
     if group_collide(rock_group, my_ship):
         lives -= 1
+        if lives == 0:
+            started = False
+            
     # draw splash screen if not started
     if not started:
+        soundtrack.pause()
         canvas.draw_image(splash_image, splash_info.get_center(), 
                           splash_info.get_size(), [WIDTH / 2, HEIGHT / 2], 
                           splash_info.get_size())
@@ -293,12 +306,15 @@ def draw(canvas):
 # timer handler that spawns a rock    
 def rock_spawner():
     global rock_group
-    while len(rock_group) <= NO_OF_ROCKS:
-        rock_pos = [random.randrange(0, WIDTH), random.randrange(0, HEIGHT)]
-        rock_vel = [random.random() * .6 - .3, random.random() * .6 - .3]
-        rock_avel = random.random() * .2 - .1
-        a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
-        rock_group.add(a_rock)
+    if started:
+        while len(rock_group) <= NO_OF_ROCKS:
+            rock_pos = [random.randrange(0, WIDTH), random.randrange(0, HEIGHT)]
+            rock_vel = [random.random() * .6 - .3, random.random() * .6 - .3]
+            rock_avel = random.random() * .2 - .1
+            a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
+            rock_group.add(a_rock)
+    else:
+        rock_group = set([])
         
     
 # initialize stuff

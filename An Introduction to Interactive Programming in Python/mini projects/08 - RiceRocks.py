@@ -93,10 +93,11 @@ def process_sprite_group(rockgroup, canvas):
         rock.update()
 
 def group_collide(sprite_group, other_object):
-    collision = False
     for sprite in set(sprite_group):
-        collision = collision or sprite.collide(other_object)
-    return collision
+        if sprite.collide(other_object):
+            sprite_group.remove(sprite)
+            return True
+    return False
 
 
 # Ship class

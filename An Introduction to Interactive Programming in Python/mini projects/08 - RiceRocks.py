@@ -87,6 +87,16 @@ def angle_to_vector(ang):
 def dist(p, q):
     return math.sqrt((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2)
 
+def process_sprite_group(rockgroup, canvas):
+    for rock in rockgroup:
+        rock.draw(canvas)
+        rock.update()
+
+def group_collide(sprite_group, other_object):
+    for sprite in set(sprite_group):
+        if sprite.collide(other_object):
+            sprite_group.remove(sprite)
+
 
 # Ship class
 class Ship:
@@ -269,11 +279,6 @@ def rock_spawner():
         rock_avel = random.random() * .2 - .1
         a_rock = Sprite(rock_pos, rock_vel, 0, rock_avel, asteroid_image, asteroid_info)
         rock_group.add(a_rock)
-            
-def process_sprite_group(rockgroup, canvas):
-    for rock in rockgroup:
-        rock.draw(canvas)
-        rock.update()
         
     
 # initialize stuff

@@ -238,7 +238,7 @@ def click(pos):
         started = True
 
 def draw(canvas):
-    global time, started
+    global time, started, lives
     
     # animiate background
     time += 1

@@ -100,6 +100,12 @@ def group_collide(sprite_group, other_object):
             return True
     return False
 
+def group_group_collide(rocks, missiles):
+    for rock in set(rocks):
+        if group_collide(missiles, rock)
+            rocks.remove(rock)
+            
+
 
 # Ship class
 class Ship:
@@ -272,8 +278,10 @@ def draw(canvas):
     my_ship.update()
     #a_rock.update()
     #a_missile.update()
+    group_group_collide(rock_group, missile_group)
     process_sprite_group(rock_group, canvas)
     process_sprite_group(missile_group, canvas)
+    
     if group_collide(rock_group, my_ship):
         lives -= 1
     # draw splash screen if not started

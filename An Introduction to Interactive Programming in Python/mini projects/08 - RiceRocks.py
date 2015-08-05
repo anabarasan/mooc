@@ -87,10 +87,10 @@ def angle_to_vector(ang):
 def dist(p, q):
     return math.sqrt((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2)
 
-def process_sprite_group(rockgroup, canvas):
-    for rock in rockgroup:
-        rock.draw(canvas)
-        rock.update()
+def process_sprite_group(sprite_group, canvas):
+    for sprite in sprite_group:
+        sprite.draw(canvas)
+        sprite.update()
 
 def group_collide(sprite_group, other_object):
     for sprite in set(sprite_group):
@@ -266,6 +266,7 @@ def draw(canvas):
     #a_rock.update()
     #a_missile.update()
     process_sprite_group(rock_group, canvas)
+    process_sprite_group(missile_group, canvas)
     if group_collide(rock_group, my_ship):
         lives -= 1
     # draw splash screen if not started

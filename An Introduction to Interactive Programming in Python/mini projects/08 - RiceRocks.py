@@ -88,9 +88,10 @@ def dist(p, q):
     return math.sqrt((p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2)
 
 def process_sprite_group(sprite_group, canvas):
-    for sprite in sprite_group:
+    for sprite in set(sprite_group):
         sprite.draw(canvas)
-        sprite.update()
+        if not sprite.update():
+            sprite_group.remove(sprite)
 
 def group_collide(sprite_group, other_object):
     for sprite in set(sprite_group):
